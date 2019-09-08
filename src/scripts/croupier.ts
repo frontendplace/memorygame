@@ -19,6 +19,35 @@ export class Croupier {
   };
 
   /**
+   * start the game with a specific level // todo more levels later default is 6
+   * @param level
+   */
+  public startGame(level:number = 6): void {
+    console.log(`starting! level ${level}` );
+    this.resetGame();
+    this.drawCards(this.cardsConfig.levels[level]);
+  };
+
+  /**
+   * handle card turning
+   */
+  private handleCardTurn(card:Card):void {
+    console.log('handleCardTurn', card);
+    // // if cards don't match, return
+    // if (!this.selectedCard1.isPair(this.selectedCard2))
+    //   return;
+    //
+    // // yay, cards match!
+    // this.selectedCard1.matchFound();
+    // this.selectedCard2.matchFound();
+    //
+    // this.selectedCard1 = null;
+    // this.selectedCard2 = null;
+    //
+    // this.checkAllFound();
+  }
+
+  /**
    * Shuffles array in place
    * @param {Array} cards items
    */
@@ -32,9 +61,26 @@ export class Croupier {
   }
 
   /**
+   * compiles the handlebars template and creates the card in dom with eventhandlers
+   * @param card
+   * @param index
+   */
+  private static createCardElement(card:Card, index:number) {
+    const board   = document.getElementById("board");
+    const source   = document.getElementById("card-template").innerHTML;
+    const template = Handlebars.compile(source);
+    const html =  template({card,index});
+    let frag = document.createRange().createContextualFragment(html);
+    let button = frag.querySelector('button');
+
+    button.addEventListener('click', card.clickHandler);
+    board.appendChild(frag);
+  }
+
+  /**
    * initialise the game
    */
-  private init() {
+  private init(): void {
     this.cardsConfig = {
       levels: [4,6,8,12,16,20,24,30]
     };
@@ -45,7 +91,7 @@ export class Croupier {
   /**
    * reset all to start position
    */
-  resetGame(){
+  private resetGame(): void{
     this.card1Picked = null;
     this.card2Picked = null;
     this.totalCards = 0;
@@ -54,50 +100,39 @@ export class Croupier {
   }
 
   /**
-   * start the game with a specific level // todo more levels later default is 6
-   * @param level
-   */
-  startGame(level:number = 6) {
-    console.log(`starting! level ${level}` );
-    this.resetGame();
-    this.drawCards(this.cardsConfig.levels[level]);
-
-  };
-
-  /**
    * draw a number/2 cards twice
    * @param totalCards
    */
-  drawCards(totalCards: number){
+  private drawCards(totalCards: number): void{
     let i;
     for(i = 1; i <= totalCards/2; i++){
-      // add dom element to game container
-      const newCard = new Card(null);
-      newCard.cardFace = i;
-      const doubleCard = new Card(null);
-      doubleCard.cardFace = i;
-      this.cards.push(newCard);
-      this.cards.push(doubleCard);
+      const firstCard = this.getNewCard(i);
+      const secondCard = this.getNewCard(i);
+      this.cards.push(firstCard);
+      this.cards.push(secondCard);
     }
-    console.log(this.cards);
-
     Croupier.shuffleCards(this.cards);
-    this.layoutCards(this.cards);
+
+    this.cards.forEach((card, index) => {
+      Croupier.createCardElement(card, index);
+    });
   }
 
   /**
-   * compiles the handlebars templete and creates the board in dom
-   * @param cards
+   * returns a new card with initial properties
+   * @param faceID
    */
-  private layoutCards(cards:Card[]): HTMLElement {
-    const board   = document.getElementById("board");
-    const source   = document.getElementById("cards-template").innerHTML;
-    const template = Handlebars.compile(source);
-    const html =  template({
-      cards: this.cards
+  private getNewCard(faceID:number): Card {
+    return new Card(faceID, this.handleCardTurn);
+  }
+
+  /**
+   * test if all cards have a match
+   */
+  private checkAllMatched():boolean {
+    return this.cards.every( (card:Card, _1, _2):boolean => {
+      return card.matched;
     });
-    board.innerHTML += html;
-    return html;
   }
 
 }

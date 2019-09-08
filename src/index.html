@@ -8,19 +8,17 @@
 <body>
   <div id="board"></div>
 
-  <script id="cards-template" type="text/x-handlebars-template">
-    {{#each cards}}
-    <div class="card" id="card-{{@index}}" data-card="{{this}}" onClick="{{onClickHandler}}">
-      <section class="front">
-        <a class="flip">
-           image {{cardFace}}
-        </a>
-      </section>
-      <section class="back">
-        image back
-      </section>
+  <script id="card-template" type="text/x-handlebars-template">
+    <div class="card" id="card-{{index}}">
+      <button>
+        <span class="front">
+          image {{card.cardFace}}
+        </span>
+        <span class="back">
+          image back
+        </span>
+      </button>
     </div>
-    {{/each}}
   </script>
 </body>
 </html>

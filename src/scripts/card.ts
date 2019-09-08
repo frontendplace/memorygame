@@ -1,21 +1,27 @@
 export class Card {
   cardFace: number;
-  cardElement: HTMLElement;
   matched: boolean;
   faceUp: boolean;
-  clickHandler: any;
+  clickHandler: EventListenerObject;
+  clickCallBack: Function;
 
-  constructor(element:HTMLElement) {
-    this.cardElement = element;
-    this.init();
+  constructor(cardFace:number, clickCallBack: Function) {
+    this.init(cardFace, clickCallBack);
   };
 
-  init() {
-    this.cardFace = 0;
-    this.cardElement = null;
+  init(cardFace:number, clickCallBack: Function) {
+    this.clickCallBack = clickCallBack;
+    this.cardFace = cardFace;
     this.matched = false;
     this.faceUp = false;
-    this.clickHandler = null;
+    this.clickHandler = {
+      handleEvent: () => {
+        if (!this.faceUp && !this.matched) {
+          this.setFaceUp(true);
+          this.clickCallBack(this);
+        }
+      }
+    };
   };
 
   /**
@@ -35,27 +41,40 @@ export class Card {
     return this.cardFace === other.cardFace;
   }
 
-  /**
-   * create eventlistener on the card at creation
-   * @param cb the function to be called at the game
-   */
-  public onCardClicked(cb:Function) {
-    this.clickHandler = () => {
-      if (!this.faceUp) {
-        this.setFaceUp(true);
-        cb(this);
-      }
-    };
+  // /**
+  //  * create eventlistener on the card at creation
+  //  * @param cb the function to be called at the game
+  //  */
+  // public onCardClicked(cb:Function) {
+  //   // Define object with `handleEvent` function
+  //   this.clickHandler = {
+  //     handleEvent: (event) => {
+  //       alert(event.type);
+  //       if (!this.faceUp) {
+  //         this.setFaceUp(true);
+  //         this.clickCallBack(this);
+  //       }
+  //     }
+  //   };
 
-    this.cardElement.addEventListener('click', this.clickHandler, false)
-  }
+// // Listen for 'click' events on the <button> and handle them with `myObject`... WHAT?!?!
+//     btn.addEventListener('click', myObject);
+//
+//     this.clickHandler = () => {
+//       if (!this.faceUp) {
+//         this.setFaceUp(true);
+//         this.clickCallBack(this);
+//       }
+//     };
+//     //this.cardElement.addEventListener('click', this.clickHandler, false)
+//   }
 
   /**
    * set matched and stop click events from happening
    */
   public setMatched(){
     this.matched = true;
-    this.cardElement.removeEventListener('click', this.clickHandler, false);
+    // this.cardElement.removeEventListener('click', this.clickHandler, false);
     // set css style not clickable anymore
   }
 
