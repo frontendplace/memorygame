@@ -18,7 +18,23 @@ export class Croupier {
     this.init();
   };
 
-  init() {
+  /**
+   * Shuffles array in place
+   * @param {Array} cards items
+   */
+  private static shuffleCards(cards:Card[]): Card[] {
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    console.log(cards);
+    return cards;
+  }
+
+  /**
+   * initialise the game
+   */
+  private init() {
     this.cardsConfig = {
       levels: [4,6,8,12,16,20,24,30]
     };
@@ -66,28 +82,14 @@ export class Croupier {
     console.log(this.cards);
 
     Croupier.shuffleCards(this.cards);
-    this.createCardElements(this.cards);
-  }
-
-
-  /**
-   * Shuffles array in place
-   * @param {Array} cards items
-   */
-  private static shuffleCards(cards:Card[]): Card[] {
-    for (let i = cards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [cards[i], cards[j]] = [cards[j], cards[i]];
-    }
-    console.log(cards);
-    return cards;
+    this.layoutCards(this.cards);
   }
 
   /**
    * compiles the handlebars templete and creates the board in dom
    * @param cards
    */
-  createCardElements(cards:Card[]): HTMLElement {
+  private layoutCards(cards:Card[]): HTMLElement {
     const board   = document.getElementById("board");
     const source   = document.getElementById("cards-template").innerHTML;
     const template = Handlebars.compile(source);

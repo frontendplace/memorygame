@@ -7,6 +7,6 @@ import { Croupier } from './croupier';
 (function(){
   document.addEventListener('DOMContentLoaded', () => {
     const croupier = new Croupier();
-    croupier.startGame();
+    croupier.startGame(4);
   });
 })();
