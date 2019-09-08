@@ -1,5 +1,5 @@
-import {Card} from "./card";
-import * as Handlebars from "handlebars";
+import {Card} from './card';
+import * as Handlebars from 'handlebars';
 
 interface cardConfig {
   levels: number[];
@@ -32,19 +32,39 @@ export class Croupier {
    * handle card turning
    */
   private handleCardTurn(card:Card):void {
+    if (!this.card1Picked) {
+      card.setFaceUp(true);
+      this.card1Picked = card;
+    } else if (!this.card2Picked) {
+      card.setFaceUp(true);
+      this.card2Picked = card;
+      this.checkCards();
+    } else { // clicked card when still cards are not reset
+      this.card1Picked.setFaceUp(false);
+      this.card2Picked.setFaceUp(false);
+      this.card1Picked = null;
+      this.card2Picked = null;
+    }
+
     console.log('handleCardTurn', card);
+  }
+
+  private checkCards(){
     // // if cards don't match, return
-    // if (!this.selectedCard1.isPair(this.selectedCard2))
-    //   return;
-    //
-    // // yay, cards match!
-    // this.selectedCard1.matchFound();
-    // this.selectedCard2.matchFound();
-    //
-    // this.selectedCard1 = null;
-    // this.selectedCard2 = null;
-    //
-    // this.checkAllFound();
+    if (!this.card1Picked.isMatchedWith(this.card2Picked)){
+      return;
+    }
+    // yay, cards match!
+    console.log('ya match');
+    this.card1Picked.setMatched();
+    this.card2Picked.setMatched();
+
+    this.card1Picked = null;
+    this.card2Picked = null;
+
+    if(this.checkAllMatched()){
+      console.log('hooraa');
+    }
   }
 
   /**
@@ -56,7 +76,6 @@ export class Croupier {
       const j = Math.floor(Math.random() * (i + 1));
       [cards[i], cards[j]] = [cards[j], cards[i]];
     }
-    console.log(cards);
     return cards;
   }
 
@@ -130,7 +149,7 @@ export class Croupier {
    * test if all cards have a match
    */
   private checkAllMatched():boolean {
-    return this.cards.every( (card:Card, _1, _2):boolean => {
+    return this.cards.every( (card:Card):boolean => {
       return card.matched;
     });
   }

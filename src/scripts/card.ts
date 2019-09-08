@@ -82,7 +82,7 @@ export class Card {
    * store the face for the classes
    * @param isUp
    */
-  private setFaceUp(isUp:boolean){
+  public setFaceUp(isUp:boolean){
     this.faceUp = isUp;
     // set class for faceup on element
     //$(this).closest('.card').removeClass('flipped')
