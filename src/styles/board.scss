@@ -1,0 +1,22 @@
+:root {
+  --repeat-columns: 4;
+  --repeat-rows: 4;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-content: center;
+  height: 100vh;
+}
+
+#board {
+  width: 80vmin;
+  height: 80vmin;
+  margin: auto auto;
+  display: grid;
+  grid-template-columns: repeat(var(--repeat-columns), 1fr);
+  grid-template-rows: repeat(var(--repeat-rows), 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}

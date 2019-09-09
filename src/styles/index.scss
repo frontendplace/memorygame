@@ -1,8 +1,11 @@
 @charset "UTF-8";
 @import "card";
+@import "board";
 
-$body-color: blue;
+$body-color: #333;
+$body-background-color: #D5F5F8;
+
 body {
   color: $body-color;
-  background-color: antiquewhite;
+  background-color: $body-background-color;
 }
