@@ -1,15 +1,18 @@
-const path = require('path');
 const Webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+
+const isProduction = typeof NODE_ENV !== 'undefined' && NODE_ENV === 'production';
+const mode = isProduction ? 'production' : 'development';
+const devtool = isProduction ? false : 'inline-source-map';
 
 // This will direct webpack to enter through ./index.ts,
 // load all .ts and .tsx files through the ts-loader,
 // and output a bundle.js file in our current directory
 module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'cheap-eval-source-map',
-  // devtool: 'inline-source-map',
+  target: 'web',
+  mode,
+  devtool,
   devServer: {
     inline: true
   },
@@ -29,7 +32,7 @@ module.exports = merge(common, {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.s?css$/i,

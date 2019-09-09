@@ -6,7 +6,21 @@
   <title>webpack starterkit</title>
 </head>
 <body>
-  <h1>webpack starter</h1>
-  <p>✨ A lightweight foundation for your next webpack based frontend project.</p>
+  <div id="board"></div>
+
+  <script id="cards-template" type="text/x-handlebars-template">
+    {{#each cards}}
+    <div class="card" id="card-{{@index}}" data-card="{{this}}" onClick="{{onClickHandler}}">
+      <section class="front">
+        <a class="flip">
+           image {{cardFace}}
+        </a>
+      </section>
+      <section class="back">
+        image back
+      </section>
+    </div>
+    {{/each}}
+  </script>
 </body>
 </html>
