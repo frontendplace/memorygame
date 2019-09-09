@@ -1,8 +1,6 @@
-# Webpack Frontend Starterkit
+# MemoryGame for Javascript course
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/wbkd/webpack-starter.svg)](https://greenkeeper.io/)
-
-A lightweight foundation for your next webpack based frontend project.
+An example of a memory game made with typescript, webpack, handlebars
 
 
 ### Installation
