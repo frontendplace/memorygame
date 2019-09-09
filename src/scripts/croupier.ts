@@ -174,6 +174,4 @@ export class Croupier {
     this.resetGame();
     this.drawCards(this.cardsConfig.levels[level]);
   };
-
-
 }
