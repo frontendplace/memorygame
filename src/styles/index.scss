@@ -1,5 +1,7 @@
-$body-color: blue;
+@charset "UTF-8";
+@import "card";
 
+$body-color: blue;
 body {
   color: $body-color;
   background-color: antiquewhite;

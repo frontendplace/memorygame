@@ -10,13 +10,13 @@
 
   <script id="card-template" type="text/x-handlebars-template">
     <div class="card" id="card-{{index}}">
-      <button>
-        <span class="front">
+      <button class="card-inner flipped">
+        <div class="card-front">
           image {{card.cardFace}}
-        </span>
-        <span class="back">
+        </div>
+        <div class="card-back">
           image back
-        </span>
+        </div>
       </button>
     </div>
   </script>
