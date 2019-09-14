@@ -23,6 +23,71 @@ button {
   transform-style: preserve-3d;
 }
 
+
+.flipped  {
+  transform: rotateY( 180deg );
+}
+
+.card-back{
+  transform: rotateY(180deg);
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 0 0;
+  cursor: url('../assets/img/finger.png'), auto;
+}
+
+.card-front {
+  cursor: url('../assets/img/finger-disabled.png'), auto;
+}
+
+.img-0{
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 0 0;
+}
+
+.img-1 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 0 34%;
+}
+.img-2 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 0 67%;
+}
+.img-3 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 0 100%;
+}
+.img-4 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 34% 0;
+}
+.img-5 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 34% 34%;
+}
+.img-6 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 34% 67%;
+}
+.img-7{
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 34% 100%;
+}
+.img-8 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 67% 0;
+}
+.img-9 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 67% 34%;
+}
+.img-10 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 67% 67%;
+}
+.img-11 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 67% 100%;
+}
+.img-12 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 100% 0;
+}
+.img-13{
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 100% 34%;
+}
+.img-14 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 100% 67%;
+}
+.img-15 {
+  background: no-repeat url("../assets/img/cards-sheet-birds.png") 100% 100%;
+}
+
 .card-front,
 .card-back {
   position: absolute;
@@ -32,19 +97,6 @@ button {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 3px;
+  background-size: 400%;
 }
 
-.card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-.card-back {
-  background-color: dodgerblue;
-  color: white;
-  transform: rotateY(180deg);
-}
-
-.flipped  {
-  transform: rotateY( 180deg );
-}

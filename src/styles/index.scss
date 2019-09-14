@@ -4,6 +4,10 @@
 
 $body-background-color: #b03;
 
+html {
+  box-sizing: border-box;
+}
+
 body {
   --p: 1;
 
@@ -11,6 +15,7 @@ body {
   display: flex;
   align-content: center;
   height: 100vh;
+  background: repeat url("../assets/img/background.png");
 
   // background: repeating-radial-gradient(circle, #4B384C 0, #4B384C 1px, transparent 2px, transparent 7px, #4B384C 8px) calc(var(--p)*32px) 0/ 64px 64px;
   &.hearts {
@@ -35,4 +40,16 @@ body {
     background-size:50px 50px;
   }
 
+}
+
+.title {
+  height: 20vmin;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+
+  img {
+    max-height: 100%;
+  }
 }

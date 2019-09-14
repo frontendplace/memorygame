@@ -4,11 +4,15 @@
 }
 
 #board {
-  width: 80vmin;
-  height: 80vmin;
+  width: calc(70vmin - 60px);
+  height: calc(70vmin - 60px);
   margin: auto auto;
   display: grid;
   grid-template-columns: repeat(var(--repeat-columns), 1fr);
   grid-template-rows: repeat(var(--repeat-rows), 1fr);
   gap: 1% 1%;
+
+  // positioning the background image
+  padding: calc(1vmin + 30px) calc(13vmin + 30px);
+  background: center / cover no-repeat url("../assets/img/levelpanel.png");
 }

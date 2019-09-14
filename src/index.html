@@ -5,18 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fabulous MemoryGame</title>
 </head>
-<body class="hearts">
+<body>
+  <div class="title"><img src="/src/assets/img/titlename.png"></div>
   <div id="board"></div>
 
   <script id="card-template" type="text/x-handlebars-template">
     <div class="card" id="card-{{index}}">
       <button class="card-inner flipped">
-        <span class="card-front">
-          image {{card.cardFace}}
-        </span>
-        <span class="card-back">
-          image back
-        </span>
+        <span class="card-front img-{{card.cardFace}}"></span>
+        <span class="card-back"></span>
       </button>
     </div>
   </script>
