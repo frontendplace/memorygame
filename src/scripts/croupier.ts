@@ -12,6 +12,7 @@ export class Croupier {
   card2Picked: Card;
   totalCards: number;
   cards: Card[];
+  maxScore: number;
 
   /**
    * Shuffles array in place
@@ -48,7 +49,7 @@ export class Croupier {
     this.card2Picked = null;
     this.totalCards = 0;
     this.cards = [];
-    //this.maxScore = 0;
+    this.maxScore = 500;
   }
 
   /**
@@ -121,6 +122,7 @@ export class Croupier {
       card.show();
       this.card2Picked = card;
       const isMatched = this.card1Picked.isMatchedWith(this.card2Picked);
+      this.maxScore = Math.max(100, this.maxScore - 20);
       if(isMatched){
         this.handleMatchCards();
       }
@@ -153,6 +155,8 @@ export class Croupier {
 
     if(this.checkAllMatched()){
       console.log('hooraa');
+      document.getElementsByClassName('score')[0].classList.add('show');
+      document.getElementById('total-score').innerText = this.maxScore.toString();
     }
   }
 

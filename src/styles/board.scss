@@ -6,7 +6,7 @@
 #board {
   width: calc(70vmin - 60px);
   height: calc(70vmin - 60px);
-  margin: auto auto;
+  margin-top: 14vmin;
   display: grid;
   grid-template-columns: repeat(var(--repeat-columns), 1fr);
   grid-template-rows: repeat(var(--repeat-rows), 1fr);
