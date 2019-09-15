@@ -1,0 +1,52 @@
+html {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "comic";
+  src: url("../assets/font/NewComicBD.woff");
+  src: url("../assets/font/NewComicBD.otf?") format("eot"),
+  url("../assets/font/NewComicBD.woff") format("woff");
+}
+
+body {
+  --p: 1;
+
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background: repeat url("../assets/background.png");
+
+  font-family: 'comic', "Comic Sans MS", "Comic Sans", cursive;
+  font-weight:normal;
+  font-style:normal;
+}
+
+.title {
+  height: 20vmin;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+
+  img {
+    max-height: 100%;
+  }
+}
+
+.score {
+  flex-grow: 1;
+  display: none;
+  height: 5vmin;
+  width: 100%;
+  text-align: center;
+  font-size: 5vmin;
+  align-items: flex-start;
+  justify-content: center;
+
+  &.show {
+    display: flex;
+  }
+}

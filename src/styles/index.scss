@@ -1,91 +1,9 @@
 @charset "UTF-8";
+
+@import 'mixins';
+@import 'scaffolding';
 @import "card";
 @import "board";
+@import "text";
 
-$body-background-color: #b03;
 
-html {
-  box-sizing: border-box;
-}
-
-@font-face {
-  font-family: "comic";
-  src: url("../assets/font/NewComicBD.woff");
-  src: url("../assets/font/NewComicBD.otf?") format("eot"),
-       url("../assets/font/NewComicBD.woff") format("woff");
-}
-
-body {
-  --p: 1;
-
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  background: repeat url("../assets/background.png");
-
-  font-family: 'comic', "Comic Sans MS", "Comic Sans", cursive;
-  font-weight:normal;
-  font-style:normal;
-
-  // background: repeating-radial-gradient(circle, #4B384C 0, #4B384C 1px, transparent 2px, transparent 7px, #4B384C 8px) calc(var(--p)*32px) 0/ 64px 64px;
-  &.hearts {
-    background: radial-gradient(circle closest-side at 60% 43%, #b03 26%, rgba(187,0,51,0) 27%),
-    radial-gradient(circle closest-side at 40% 43%, #b03 26%, rgba(187,0,51,0) 27%),
-    radial-gradient(circle closest-side at 40% 22%, #d35 45%, rgba(221,51,85,0) 46%),
-    radial-gradient(circle closest-side at 60% 22%, #d35 45%, rgba(221,51,85,0) 46%),
-    radial-gradient(circle closest-side at 50% 35%, #d35 30%, rgba(221,51,85,0) 31%),
-    radial-gradient(circle closest-side at 60% 43%, #b03 26%, rgba(187,0,51,0) 27%) 50px 50px,
-    radial-gradient(circle closest-side at 40% 43%, #b03 26%, rgba(187,0,51,0) 27%) 50px 50px,
-    radial-gradient(circle closest-side at 40% 22%, #d35 45%, rgba(221,51,85,0) 46%) 50px 50px,
-    radial-gradient(circle closest-side at 60% 22%, #d35 45%, rgba(221,51,85,0) 46%) 50px 50px,
-    radial-gradient(circle closest-side at 50% 35%, #d35 30%, rgba(221,51,85,0) 31%) 50px 50px;
-    background-color: $body-background-color;
-    background-size: 100px 100px;
-  }
-
-  &.tablecloth {
-    background-color:white;
-    background-image: linear-gradient(90deg, rgba(200,0,0,.5) 50%, transparent 50%),
-    linear-gradient(rgba(200,0,0,.5) 50%, transparent 50%);
-    background-size:50px 50px;
-  }
-
-}
-
-.title {
-  height: 20vmin;
-  width: 100%;
-  position: absolute;
-  text-align: center;
-  top: 20px;
-
-  img {
-    max-height: 100%;
-  }
-}
-
-.score {
-  flex: 1;
-  display: none;
-  height: 5vmin;
-  width: 100%;
-  text-align: center;
-  font-size: 5vmin;
-  color: #FFF001;
-
-  //text-shadow:-1px -1px 0px #1c1c1c,1px 1px 0px #3d3d3e,2px 2px 1px #f63909,3px 3px 0px #3d3d3e,4px 4px 0px #3d3d3e;
-
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black,
-  -2px 0 #f63909, 0 2px #f63909, 2px 0 #f63909, 0 -2px #f63909,
-    4px 4px 4px black;
-
-  //background: -webkit-linear-gradient(#FFF001, #333);
-  //-webkit-background-clip: text;
-  //-webkit-text-fill-color: transparent;
-
-  &.show {
-    display: block;
-  }
-}

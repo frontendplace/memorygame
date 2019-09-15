@@ -1,0 +1,45 @@
+// create 16 images starting from 0 to map to the images in the sprite for a matrix 4x4
+@mixin sprite-background($url, $matrix) {
+  $repeat: $matrix - 1;
+  $factor: 100/$repeat * 1%;
+
+  $index: 0;
+  @for $x from 0 through $repeat {
+    $xpos: $x * $factor;
+    @for $y from 0 through $repeat {
+      $ypos: $y * $factor;
+      @if $xpos == 0 and $ypos == 0 {
+        .card-back{
+          background: no-repeat url($url) $xpos $ypos #{'/'} $matrix * 100%;
+        }
+      }
+      @else {
+        .img-#{$index} {
+          background: no-repeat url($url) $xpos $ypos #{'/'} $matrix * 100%;
+        }
+      }
+
+      $index: $index+1;
+    }
+  }
+
+  //$list: 0%, 33.33%, 66.66%, 100%;
+  //@each $xelement in $list {
+  //  @each $yelement in $list {
+  //    .img-#{$index} {
+  //      background: no-repeat url($url) $xelement $yelement #{'/ 400%'};
+  //    }
+  //    $index: $index+1;
+  //  }
+  //}
+}
+
+@mixin gradientText($start, $end){
+  background-color: #f1da36; // Old browsers
+  background-image: linear-gradient(to bottom, $start 0%,$start 69%,$end 100%);;
+  color:transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+
