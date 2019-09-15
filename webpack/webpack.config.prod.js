@@ -7,9 +7,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // load all .ts and .tsx files through the ts-loader,
 // and output a bundle.js file in our current directory
 module.exports = merge(common, {
-  target: 'web',
   mode: 'production',
   devtool: 'source-map',
+  entry: './src/scripts/index.ts',
   plugins: [
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
@@ -18,7 +18,7 @@ module.exports = merge(common, {
       filename: 'bundle.css'
     })
   ],
-  entry: './src/scripts/index.ts',
+
   module: {
     rules: [
       {
@@ -31,6 +31,7 @@ module.exports = merge(common, {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
+          'postcss-loader',
           'sass-loader']
       }
     ]

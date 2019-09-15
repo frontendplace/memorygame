@@ -4,11 +4,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  target: 'web',
   entry: {
-    app: Path.resolve(__dirname, '../src/scripts/index.ts')
+    main: "./src/script/index.ts"
   },
   output: {
-    path: Path.join(__dirname, '../build'),
+    path: Path.resolve(__dirname, "../dist"),
     filename: 'js/[name].js'
   },
   optimization: {
@@ -23,7 +24,12 @@ module.exports = {
       { from: Path.resolve(__dirname, '../public'), to: 'public' }
     ]),
     new HtmlWebpackPlugin({
-      template: Path.resolve(__dirname, '../src/index.html')
+      template: Path.resolve(__dirname, '../src/index.html'),
+      minify: false,
+      templateParameters: {
+        'version': '1.0'
+      },
+      favicon: ""
     })
   ],
   resolve: {
@@ -39,14 +45,48 @@ module.exports = {
         type: 'javascript/auto'
       },
       {
-        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|ogg|webp|svg|ttf|woff|woff2)(\?.*)?$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[path][name].[ext]'
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "img/"
+            }
+          },
+          {
+            loader: "image-webpack-loader",
+            options: {
+              bypassOnDebug: true
+            }
           }
-        }
+        ]
       },
+      {
+        test: /\.ico$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]"
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|otf)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
+          }
+        ]
+      }
     ]
   }
 };
+
+
