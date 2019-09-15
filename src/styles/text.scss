@@ -1,6 +1,12 @@
+%text-shadow {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black,
+  -2px 0 #f63909, 0 2px #f63909, 2px 0 #f63909, 0 -2px #f63909,
+  4px 4px 4px black;
+}
+
 .comic {
-  color: rgba(#FFF001,1);
   position: relative;
+  @include gradientText(#FFF001,rgba(#f63909,0.8));
 
   // gradient and text-shadow cannot be on the same text so use the before
   &::before {
@@ -9,10 +15,11 @@
     left: 0;
     z-index: -1;
     content: attr(data-content);
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black,
-    -2px 0 #f63909, 0 2px #f63909, 2px 0 #f63909, 0 -2px #f63909,
-    4px 4px 4px black;
+    @extend %text-shadow;
   }
+}
 
-  @include gradientText(rgba(#FFF001,1),rgba(#f63909,0.8));
+#total-score {
+  color: #FFF001;
+  @extend %text-shadow;
 }
