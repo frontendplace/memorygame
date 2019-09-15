@@ -28,6 +28,21 @@ button {
   transform: rotateY( 180deg );
 }
 
+@keyframes shine {
+  0%   {
+    filter: brightness(1);
+    filter: contrast(1);
+  }
+  50%  {
+    filter: brightness(.2);
+    filter: contrast(.2);
+  }
+  100% {
+    filter: brightness(1);
+    filter: contrast(1);
+  }
+}
+
 .card-back{
   transform: rotateY(180deg);
   background: no-repeat url("../assets/cards-sheet-birds.png") 0 0;
@@ -36,6 +51,12 @@ button {
 
 .card-front {
   cursor: url('../assets/finger-disabled.png'), auto;
+
+  &.matched {
+    animation-name: shine;
+    animation-duration: 0.4s;
+    animation-delay: 0.5s;
+  }
 }
 
 .img-0{

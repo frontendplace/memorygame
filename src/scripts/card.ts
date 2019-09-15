@@ -36,6 +36,7 @@ export class Card {
    * set matched and stop click events from happening
    */
   public setMatched(){
+    this.element.querySelector('.card-front').classList.add('matched');
     this.matched = true;
   }
 
