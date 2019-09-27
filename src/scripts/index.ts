@@ -5,6 +5,6 @@ import '../../favicon.ico';
 (function(){
   document.addEventListener('DOMContentLoaded', () => {
     const croupier = new Croupier();
-    croupier.startGame(6);
+    croupier.startGame();
   });
 })();
