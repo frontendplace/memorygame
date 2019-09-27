@@ -16,15 +16,6 @@ export class Card {
   };
 
   /**
-   * reset card to faceDown with timeout
-   */
-  public hideCard(){
-    setTimeout(() => {
-      this.hide()
-    }, 2000);
-  }
-
-  /**
    * test if current face is same as previous card face
    * @param other
    */

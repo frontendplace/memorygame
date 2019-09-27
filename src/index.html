@@ -8,7 +8,18 @@
 </head>
 <body>
   <div class="title"><img alt="title" src="../public/titlename.png"></div>
-  <div id="board"></div>
+  <div class="board-container">
+    <div id="board"></div>
+    <ul class="levels">
+      <li><label><input type="radio" name="level" value="0"></label></li>
+      <li><label><input type="radio" name="level" value="1"></label></li>
+      <li><label><input type="radio" name="level" value="2"></label></li>
+      <li><label><input type="radio" name="level" value="3"></label></li>
+      <li><label><input type="radio" name="level" value="4"></label></li>
+      <li><label><input type="radio" name="level" value="5"></label></li>
+      <li><label><input type="radio" name="level" value="6"></label></li>
+    </ul>
+  </div>
   <div class="score"><span class="comic" data-content="Congratulations your score is:">Congratulations your score is: <span id="total-score"></span></span></div>
 
   <script id="card-template" type="text/x-handlebars-template">

@@ -2,8 +2,13 @@ import {Card} from './card';
 // @ts-ignore
 import * as Handlebars from 'handlebars';
 
+interface matrix {
+  rows: number;
+  cols: number;
+}
+
 interface cardConfig {
-  levels: number[];
+  levels: matrix[];
 }
 
 export class Croupier {
@@ -13,6 +18,7 @@ export class Croupier {
   totalCards: number;
   cards: Card[];
   maxScore: number;
+  sqrtSpace = 2700;
 
   /**
    * Shuffles array in place
@@ -35,8 +41,23 @@ export class Croupier {
    */
   private init(): void {
     this.cardsConfig = {
-      levels: [4,6,8,12,16,20,24,30]
+      levels: [
+        {rows: 2, cols: 2},
+        {rows: 2, cols: 3},
+        {rows: 3, cols: 4},
+        {rows: 4, cols: 4},
+        {rows: 4, cols: 5},
+        {rows: 4, cols: 6},
+        {rows: 5, cols: 6},
+      ]
     };
+
+    document.querySelectorAll('.levels input').forEach(el => {
+      el.addEventListener('change', evt => {
+        const level = (<HTMLInputElement>evt.target).value;
+        this.startGame(Number(level));
+      })
+    });
 
     this.resetGame();
   };
@@ -50,6 +71,8 @@ export class Croupier {
     this.totalCards = 0;
     this.cards = [];
     this.maxScore = 500;
+    const board   = document.getElementById("board");
+    board.innerHTML = '';
   }
 
   /**
@@ -174,8 +197,18 @@ export class Croupier {
    * @param level
    */
   public startGame(level:number = 6): void {
+    let root = document.documentElement;
+
     console.log(`starting! level ${level}` );
+    const totalCards = this.cardsConfig.levels[level].rows * this.cardsConfig.levels[level].cols;
+    const sqrt = Math.sqrt(this.sqrtSpace / totalCards);
+
+    root.style.setProperty('--square-root', `${sqrt}vmin`);
+    root.style.setProperty('--repeat-columns', this.cardsConfig.levels[level].cols.toString());
+    root.style.setProperty('--repeat-rows', this.cardsConfig.levels[level].rows.toString());
+
     this.resetGame();
-    this.drawCards(this.cardsConfig.levels[level]);
+    this.drawCards(totalCards);
   };
+
 }
