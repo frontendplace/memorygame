@@ -1,10 +1,13 @@
 import '../styles/index.scss';
 import { Croupier } from './croupier';
 import '../../favicon.ico';
+import { LevelsController } from './levelsController';
 
 (function(){
   document.addEventListener('DOMContentLoaded', () => {
-    const croupier = new Croupier();
+    const levelsController = new LevelsController();
+    const croupier = new Croupier(levelsController);
+
     croupier.startGame();
   });
 })();

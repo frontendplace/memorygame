@@ -1,32 +1,22 @@
 import {Card} from './card';
 // @ts-ignore
 import * as Handlebars from 'handlebars';
-
-interface Level {
-  rows: number;
-  cols: number;
-  score: number;
-}
-
-interface CardConfig {
-  levels: Level[];
-}
+import { Level } from '../models/level.model';
+import { LevelsController } from './levelsController';
 
 export class Croupier {
-  cardsConfig: CardConfig; // later specify this in
   card1Picked: Card;
   card2Picked: Card;
   totalCards: number;
   cards: Card[];
-  maxScore: number;
   sqrtSpace = 2700; // area space in vmin where the cards can be placed
   levelElements: NodeListOf<HTMLInputElement>;
   backgroundTypeElements:  NodeListOf<HTMLInputElement>;
   scoreElement: Element;
   boardElement: HTMLElement;
-  currentLevel: number;
-  currentGame: number;
-  totalScore: number;
+  levelsController: LevelsController;
+  level: Level;
+  score: number;
 
   /**
    * Shuffles array in place
@@ -41,26 +31,6 @@ export class Croupier {
   }
 
   /**
-   * get score
-   * @param {Level} item
-   * @returns {number}
-   * @example usage tot sum up all values: levels.map(amount).reduce(sum);
-   */
-  private static amount(item: Level): number{
-    return item.score;
-  }
-
-  /**
-   * sum two values
-   * @param {number} prev
-   * @param {number} next
-   * @returns {number}
-   */
-  private static sum(prev:number, next:number): number{
-    return prev + next;
-  }
-
-  /**
    * returns a new card with initial properties
    * @param faceID
    */
@@ -68,8 +38,8 @@ export class Croupier {
     return new Card(faceID);
   }
 
-
-  constructor() {
+  constructor(levelsController: LevelsController) {
+    this.levelsController = levelsController;
     this.levelElements = document.querySelectorAll('.levels input');
     this.backgroundTypeElements = document.querySelectorAll('.type input');
     this.scoreElement = document.getElementsByClassName('score')[0];
@@ -79,22 +49,10 @@ export class Croupier {
   };
 
   /**
-   * initialise the game
+   * initialise the game with event handlers
    */
   private init(): void {
-    this.cardsConfig = {
-      levels: [
-        {rows: 2, cols: 2, score: 0},
-        {rows: 2, cols: 3, score: 0},
-        {rows: 3, cols: 4, score: 0},
-        {rows: 4, cols: 4, score: 0},
-        {rows: 4, cols: 5, score: 0},
-        {rows: 4, cols: 6, score: 0},
-        {rows: 5, cols: 6, score: 0},
-      ]
-    };
-
-    this.levelElements.forEach(el => {
+    this.levelsController.levelElements.forEach(el => {
       el.addEventListener('change', evt => {
         const level = (<HTMLInputElement>evt.target).value;
         this.startGame(Number(level));
@@ -108,8 +66,6 @@ export class Croupier {
         this.boardElement.classList[action]('faces');
       })
     });
-
-    this.currentLevel = 0;
   };
 
   /**
@@ -121,13 +77,9 @@ export class Croupier {
     this.card2Picked = null;
     this.totalCards = 0;
     this.cards = [];
-    this.currentGame = gameIndex;
-    const board   = document.getElementById("board");
-    document.getElementsByClassName('score')[0].classList.remove('show');
 
-    board.innerHTML = '';
-
-    this.setLevels(gameIndex);
+    // reset content of the board
+    this.boardElement.innerHTML = '';
   }
 
   /**
@@ -179,17 +131,6 @@ export class Croupier {
   }
 
   /**
-   * reset the input settings
-   * @param {Number} gameIndex
-   */
-  private setLevels(gameIndex: Number){
-    this.levelElements.forEach((el, index) => {
-      el.checked =  index === gameIndex;
-      el.disabled = index > this.currentLevel;
-    });
-  }
-
-  /**
    * handle card turning
    */
   private handleCardTurn(card:Card):void {
@@ -203,7 +144,7 @@ export class Croupier {
       card.show();
       this.card2Picked = card;
       const isMatched = this.card1Picked.isMatchedWith(this.card2Picked);
-      this.maxScore = Math.max(100, this.maxScore - 20);
+      this.score = Math.max(100, this.score - 20);
       if(isMatched){
         this.handleMatchCards();
       }
@@ -251,20 +192,8 @@ export class Croupier {
   private finalizedGame(){
     console.log('hooraa');
     // store score
-    this.cardsConfig.levels[this.currentGame].score = this.maxScore;
-    const totalScore = this.cardsConfig.levels.map(Croupier.amount).reduce(Croupier.sum);
-
-    // display score
-    document.getElementsByClassName('score')[0].classList.add('show');
-    document.getElementById('total-score').innerText = totalScore.toString();
-
-    // if current game is the highest then set level 1 higher
-    if(this.currentGame === this.currentLevel){
-      this.currentLevel++;
-    }
-
-    // enable the levels
-    this.setLevels(this.currentGame);
+    this.level.score = this.score;
+    this.levelsController.finalizeLevel();
   }
 
   /**
@@ -272,19 +201,17 @@ export class Croupier {
    * @param levelIndex
    */
   public startGame(levelIndex:number = 0): void {
-    let root = document.documentElement;
-    let level = this.cardsConfig.levels[levelIndex];
+    // get new level
+    this.level = this.levelsController.resetLevel(levelIndex);
+    const totalCards = this.level.rows * this.level.cols;
+    this.score = this.levelsController.maxScore;
 
-    console.log(`starting! level ${levelIndex}`,  this.cardsConfig.levels);
-
-    const totalCards = level.rows * level.cols;
+    // layout for the cards
     const sqrt = Math.sqrt(this.sqrtSpace / totalCards);
-
+    const root = document.documentElement;
     root.style.setProperty('--square-root', `${sqrt}vmin`);
-    root.style.setProperty('--repeat-columns', level.cols.toString());
-    root.style.setProperty('--repeat-rows', level.rows.toString());
-
-    this.maxScore = 50 * totalCards;
+    root.style.setProperty('--repeat-columns', this.level.cols.toString());
+    root.style.setProperty('--repeat-rows', this.level.rows.toString());
 
     this.resetGame(levelIndex);
     this.drawCards(totalCards);
