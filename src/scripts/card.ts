@@ -4,6 +4,10 @@ export class Card {
   faceUp: boolean;
   element: HTMLElement;
 
+  /**
+   * represents a single card in the game
+   * @param {number} cardFace
+   */
   constructor(cardFace:number) {
     this.init(cardFace);
   };

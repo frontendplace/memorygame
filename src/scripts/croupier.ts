@@ -38,6 +38,10 @@ export class Croupier {
     return new Card(faceID);
   }
 
+  /**
+   * represents the croupier that deals with drawing and turning the cards
+   * @param {LevelsController} levelsController
+   */
   constructor(levelsController: LevelsController) {
     this.levelsController = levelsController;
     this.levelElements = document.querySelectorAll('.levels input');

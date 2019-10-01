@@ -10,6 +10,9 @@ export class LevelsController {
   totalScore: number;
   maxScore: number;
 
+  /**
+   * represents a controller for the access to different levels
+   */
   constructor() {
     this.levelElements = document.querySelectorAll('.levels input');
     this.scoreElement = <HTMLElement>document.getElementsByClassName('score')[0];
